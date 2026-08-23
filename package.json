@@ -1,0 +1,17 @@
+{
+  "name": "jp.yadecode.editoronly-switch",
+  "displayName": "EditorOnly Switch",
+  "version": "0.1.0",
+  "unity": "2020.3",
+  "description": "Adds a toggle to each Hierarchy row to switch a GameObject's tag between EditorOnly and Untagged, so you can see and manage EditorOnly objects at a glance.",
+  "keywords": [
+    "editor",
+    "hierarchy",
+    "editoronly",
+    "tag"
+  ],
+  "author": {
+    "name": "tom-yade"
+  },
+  "license": "MIT"
+}
