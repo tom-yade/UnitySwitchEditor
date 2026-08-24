@@ -45,19 +45,22 @@ jobs:
           cp CHANGELOG.md CHANGELOG.md.meta "$DEST/"
           cp CHANGELOG.ja.md CHANGELOG.ja.md.meta "$DEST/"
           cp LICENSE.md LICENSE.md.meta "$DEST/"
+          # create-unitypackage reads the include list from a file (each line ends with .meta)
+          cat > unitypackage-includes.txt <<'EOF'
+          Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlyHierarchyToggle.cs.meta
+          Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlySettings.cs.meta
+          Assets/YadeCode/EditorOnlySwitch/Editor/UnitySwitchEditor.Editor.asmdef.meta
+          Assets/YadeCode/EditorOnlySwitch/README.md.meta
+          Assets/YadeCode/EditorOnlySwitch/CHANGELOG.md.meta
+          Assets/YadeCode/EditorOnlySwitch/CHANGELOG.ja.md.meta
+          Assets/YadeCode/EditorOnlySwitch/LICENSE.md.meta
+          EOF
 
       - name: Create .unitypackage
         uses: pCYSl5EDgo/create-unitypackage@v1
         with:
           package-path: EditorOnlySwitch_v${{ steps.meta.outputs.version }}.unitypackage
-          include-files: |
-            Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlyHierarchyToggle.cs.meta
-            Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlySettings.cs.meta
-            Assets/YadeCode/EditorOnlySwitch/Editor/UnitySwitchEditor.Editor.asmdef.meta
-            Assets/YadeCode/EditorOnlySwitch/README.md.meta
-            Assets/YadeCode/EditorOnlySwitch/CHANGELOG.md.meta
-            Assets/YadeCode/EditorOnlySwitch/CHANGELOG.ja.md.meta
-            Assets/YadeCode/EditorOnlySwitch/LICENSE.md.meta
+          include-files: unitypackage-includes.txt
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
