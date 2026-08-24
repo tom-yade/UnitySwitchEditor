@@ -15,6 +15,48 @@ Unity の **Hierarchy** の各行に、GameObject のタグを `EditorOnly` と 
 です。標準では Inspector の Tag ドロップダウンから 1 つずつしか変更できず、どれが
 `EditorOnly` かを一覧で把握することもできません。このパッケージはその両方を解決します。
 
+## Installation / 導入
+
+### VCC / ALCOM (recommended)
+
+1. Open the listing page and press **Add to VCC**:
+   <https://tom-yade.github.io/vpm-repository/>
+   (or add the repository manually in *Settings > Packages > Add Repository* with the
+   URL `https://tom-yade.github.io/vpm-repository/index.json`).
+2. In your project's *Manage Project* view, add **EditorOnly Switch**.
+
+### .unitypackage
+
+Download the latest `.unitypackage` from the
+[Releases](https://github.com/tom-yade/UnitySwitchEditor/releases) page and import it
+via *Assets > Import Package > Custom Package*.
+
+### UPM (git URL)
+
+In *Window > Package Manager*, choose **Add package from git URL** and enter:
+`https://github.com/tom-yade/UnitySwitchEditor.git`
+
+---
+
+### VCC / ALCOM（推奨）
+
+1. リスティングページを開き **Add to VCC** を押します:
+   <https://tom-yade.github.io/vpm-repository/>
+   （または *Settings > Packages > Add Repository* に URL
+   `https://tom-yade.github.io/vpm-repository/index.json` を手動で追加）。
+2. プロジェクトの *Manage Project* から **EditorOnly Switch** を追加します。
+
+### .unitypackage
+
+[Releases](https://github.com/tom-yade/UnitySwitchEditor/releases) ページから最新の
+`.unitypackage` をダウンロードし、*Assets > Import Package > Custom Package* でインポート
+します。
+
+### UPM（git URL）
+
+*Window > Package Manager* で **Add package from git URL** を選び、次を入力します:
+`https://github.com/tom-yade/UnitySwitchEditor.git`
+
 ## Features / 機能
 
 - A checkbox on the right edge of each Hierarchy row: click to switch
