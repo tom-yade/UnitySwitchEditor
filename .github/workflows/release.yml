@@ -1,0 +1,70 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read package metadata
+        id: meta
+        run: |
+          echo "name=$(jq -r .name package.json)" >> "$GITHUB_OUTPUT"
+          echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+
+      # VPM package zip: package.json must sit at the zip root, keep every .meta
+      # so GUIDs / assembly references stay intact.
+      - name: Create VPM package zip
+        run: |
+          zip -r "${{ steps.meta.outputs.name }}-${{ steps.meta.outputs.version }}.zip" \
+            package.json package.json.meta \
+            Editor.meta Editor \
+            README.md README.md.meta \
+            CHANGELOG.md CHANGELOG.md.meta \
+            CHANGELOG.ja.md CHANGELOG.ja.md.meta \
+            LICENSE.md LICENSE.md.meta
+
+      # A .unitypackage places files under Assets/, so stage the package there
+      # (keeping each .meta so GUIDs / assembly references stay intact).
+      - name: Stage assets under Assets/
+        run: |
+          DEST="Assets/YadeCode/EditorOnlySwitch"
+          mkdir -p "$DEST/Editor"
+          cp Editor/*.cs Editor/*.cs.meta "$DEST/Editor/"
+          cp Editor/*.asmdef Editor/*.asmdef.meta "$DEST/Editor/"
+          cp README.md README.md.meta "$DEST/"
+          cp CHANGELOG.md CHANGELOG.md.meta "$DEST/"
+          cp CHANGELOG.ja.md CHANGELOG.ja.md.meta "$DEST/"
+          cp LICENSE.md LICENSE.md.meta "$DEST/"
+
+      - name: Create .unitypackage
+        uses: pCYSl5EDgo/create-unitypackage@v1
+        with:
+          package-path: EditorOnlySwitch_v${{ steps.meta.outputs.version }}.unitypackage
+          include-files: |
+            Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlyHierarchyToggle.cs
+            Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlySettings.cs
+            Assets/YadeCode/EditorOnlySwitch/Editor/UnitySwitchEditor.Editor.asmdef
+            Assets/YadeCode/EditorOnlySwitch/README.md
+            Assets/YadeCode/EditorOnlySwitch/CHANGELOG.md
+            Assets/YadeCode/EditorOnlySwitch/CHANGELOG.ja.md
+            Assets/YadeCode/EditorOnlySwitch/LICENSE.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.meta.outputs.version }}
+          files: |
+            ${{ steps.meta.outputs.name }}-${{ steps.meta.outputs.version }}.zip
+            package.json
+            EditorOnlySwitch_v${{ steps.meta.outputs.version }}.unitypackage
+          generate_release_notes: true
