@@ -51,13 +51,13 @@ jobs:
         with:
           package-path: EditorOnlySwitch_v${{ steps.meta.outputs.version }}.unitypackage
           include-files: |
-            Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlyHierarchyToggle.cs
-            Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlySettings.cs
-            Assets/YadeCode/EditorOnlySwitch/Editor/UnitySwitchEditor.Editor.asmdef
-            Assets/YadeCode/EditorOnlySwitch/README.md
-            Assets/YadeCode/EditorOnlySwitch/CHANGELOG.md
-            Assets/YadeCode/EditorOnlySwitch/CHANGELOG.ja.md
-            Assets/YadeCode/EditorOnlySwitch/LICENSE.md
+            Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlyHierarchyToggle.cs.meta
+            Assets/YadeCode/EditorOnlySwitch/Editor/EditorOnlySettings.cs.meta
+            Assets/YadeCode/EditorOnlySwitch/Editor/UnitySwitchEditor.Editor.asmdef.meta
+            Assets/YadeCode/EditorOnlySwitch/README.md.meta
+            Assets/YadeCode/EditorOnlySwitch/CHANGELOG.md.meta
+            Assets/YadeCode/EditorOnlySwitch/CHANGELOG.ja.md.meta
+            Assets/YadeCode/EditorOnlySwitch/LICENSE.md.meta
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
